@@ -55,7 +55,6 @@ def set_new_target_arrow():
 
     if points: # points 리스트 안에 남아있는 점이 있으면 True
         sx, sy = cx, cy  # p1 : 시작점
-        # hx, hy = 50, 50
         hx, hy = points[0] # 첫번째 요소를 가져옴
         t = 0.00
         action = 1 if sx < hx else 0  # 파이썬에서 가능한 문법
@@ -92,7 +91,8 @@ def update_world():
             cx, cy = hx, hy  # 캐릭터와 목표의 위치를 강제로 정확하게 일치시킴.
             del points[0] # 목표지점에 도달했기 때문에, 리스트의 첫번째 원소를 삭제함
             set_new_target_arrow()
-
+    elif points: # 목표 지점이 없는 상황에서, 새로운 폭표 지점이 생기면 이동
+        set_new_target_arrow()
 
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 hide_cursor()
