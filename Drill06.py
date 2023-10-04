@@ -49,13 +49,20 @@ def set_new_target_arrow():
     global sx, sy, hx, hy, t
     global action
     global frame
-    sx, sy = cx, cy  # p1 : 시작점
-    # hx, hy = 50, 50
-    hx, hy = points[0]
-    t = 0.00
-    action = 1 if cx < hx else 0  # 파이썬에서 가능한 문법
-    frame = 0
+    global target_exists
 
+    if points: # points 리스트 안에 남아있는 점이 있으면 True
+        sx, sy = cx, cy  # p1 : 시작점
+        # hx, hy = 50, 50
+        hx, hy = points[0] # 첫번째 요소를 가져옴
+        t = 0.00
+        action = 1 if sx < hx else 0  # 파이썬에서 가능한 문법
+        frame = 0
+        target_exists = True
+    else:
+        action = 3 if action == 1 else 2 # 이전에 소년의 이동방향에 따른 idle 방향 설정
+        frame = 0
+        target_exists = False
 
 def render_world():
     clear_canvas()
@@ -74,14 +81,15 @@ def update_world():
 
     frame = (frame + 1) % 8
 
-
-    if t < 1.0:  # t가 1이 넘으면 안됨
-        cx = (1 - t) * sx + t * hx  # cx는 시작x와 끝x를 1-t:t의 비율로 섞은 위치
-        cy = (1 - t) * sy + t * hy
-        t += 0.001
-    else:
-        cx, cy = hx, hy  # 캐릭터와 목표의 위치를 강제로 정확하게 일치시킴.
-        set_new_target_arrow()
+    if target_exists:
+        if t < 1.0:  # t가 1이 넘으면 안됨
+            cx = (1 - t) * sx + t * hx  # cx는 시작x와 끝x를 1-t:t의 비율로 섞은 위치
+            cy = (1 - t) * sy + t * hy
+            t += 0.001
+        else: # 소년이 목표지점에 도달하면
+            cx, cy = hx, hy  # 캐릭터와 목표의 위치를 강제로 정확하게 일치시킴.
+            del points[0] # 목표지점에 도달했기 때문에, 리스트의 첫번째 원소를 삭제함
+            set_new_target_arrow()
 
 
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
