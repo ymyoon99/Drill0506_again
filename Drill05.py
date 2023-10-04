@@ -34,8 +34,9 @@ def reset_world():
     x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
     frame = 0
 
-    hx, hy = TUK_WIDTH - 50, TUK_HEIGHT - 50
-
+    # hx, hy = TUK_WIDTH - 50, TUK_HEIGHT - 50
+    hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT)
+    
 
 def render_world():
     clear_canvas()
