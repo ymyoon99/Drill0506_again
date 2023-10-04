@@ -31,13 +31,15 @@ def reset_world():
     global hx, hy
     global sx, sy
     global t
+    global action
 
     running = True
     cx, cy = TUK_WIDTH // 2, TUK_HEIGHT // 2
     frame = 0
+    action = 3
 
     sx, sy = cx, cy # p1 : 시작점
-    hx, hy = TUK_WIDTH - 50, TUK_HEIGHT - 50
+    hx, hy = 50, 50
     # hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT) # p2 : 끝점.
     t = 0.00
 
@@ -45,15 +47,18 @@ def render_world():
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
     arrow.draw(hx, hy)
-    character.clip_draw(frame * 100, 100 * 1, 100, 100, cx, cy)
+    character.clip_draw(frame * 100, 100 * action, 100, 100, cx, cy)
     update_canvas()
 
 def update_world():
     global frame  # 자동으로 global 추가
     global cx,cy
     global t
+    global action
 
     frame = (frame + 1) % 8
+    action = 1 if cx < hx else 0 # 파이썬에서 가능한 문법
+
 
     if t < 1.0: # t가 1이 넘으면 안됨
         cx = (1-t)*sx + t*hx  # cx는 시작x와 끝x를 1-t:t의 비율로 섞은 위치
