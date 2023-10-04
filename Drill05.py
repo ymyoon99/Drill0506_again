@@ -27,13 +27,22 @@ x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
 frame = 0
 hide_cursor()
 
-while running:
+
+def render_world():
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
     character.clip_draw(frame * 100, 100 * 1, 100, 100, x, y)
     update_canvas()
+
+
+def update_world():
+    global frame # 자동으로 global 추가
     frame = (frame + 1) % 8
 
+
+while running:
+    render_world()
+    update_world()
     handle_events()
 
 close_canvas()
