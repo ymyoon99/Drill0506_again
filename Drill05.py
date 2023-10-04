@@ -39,8 +39,8 @@ def reset_world():
     action = 3
 
     sx, sy = cx, cy # p1 : 시작점
-    hx, hy = 50, 50
-    # hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT) # p2 : 끝점.
+    # hx, hy = 50, 50
+    hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT) # p2 : 끝점.
     t = 0.00
 
 def render_world():
