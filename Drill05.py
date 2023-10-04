@@ -37,8 +37,8 @@ def reset_world():
     frame = 0
 
     sx, sy = cx, cy # p1 : 시작점
-    # hx, hy = TUK_WIDTH - 50, TUK_HEIGHT - 50
-    hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT) # p2 : 끝점.
+    hx, hy = TUK_WIDTH - 50, TUK_HEIGHT - 50
+    # hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT) # p2 : 끝점.
     t = 0.00
 
 def render_world():
@@ -47,16 +47,19 @@ def render_world():
     arrow.draw(hx, hy)
     character.clip_draw(frame * 100, 100 * 1, 100, 100, cx, cy)
     update_canvas()
-    t += 0.001
 
 def update_world():
     global frame  # 자동으로 global 추가
     global cx,cy
+    global t
+
     frame = (frame + 1) % 8
 
+    if t < 1.0: # t가 1이 넘으면 안됨
+        cx = (1-t)*sx + t*hx  # cx는 시작x와 끝x를 1-t:t의 비율로 섞은 위치
+        cy = (1-t)*sy + t*hy
 
-    cx = (1-t)*sx + t*hx  # cx는 시작x와 끝x를 1-t:t의 비율로 섞은 위치
-    cy = (1-t)*sy + t*hy
+        t += 0.001
 
 
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
