@@ -27,8 +27,6 @@ def handle_events():
 
 def reset_world():
     global running, cx, cy, frame
-    global hx, hy
-    global sx, sy
     global t
     global action
 
@@ -42,10 +40,14 @@ def reset_world():
 
 def set_new_target_arrow():
     global sx, sy, hx, hy, t
+    global action
+    global frame
     sx, sy = cx, cy  # p1 : 시작점
     # hx, hy = 50, 50
     hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT)  # p2 : 끝점.
     t = 0.00
+    action = 1 if cx < hx else 0  # 파이썬에서 가능한 문법
+    frame = 0
 
 
 def render_world():
@@ -60,10 +62,9 @@ def update_world():
     global frame  # 자동으로 global 추가
     global cx, cy
     global t
-    global action
 
     frame = (frame + 1) % 8
-    action = 1 if cx < hx else 0  # 파이썬에서 가능한 문법
+
 
     if t < 1.0:  # t가 1이 넘으면 안됨
         cx = (1 - t) * sx + t * hx  # cx는 시작x와 끝x를 1-t:t의 비율로 섞은 위치
